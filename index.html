@@ -1,0 +1,154 @@
+<html lang="fr" xmlns:v-bind="http://www.w3.org/1999/xhtml" style=" overflow: hidden">
+    <head>
+        <meta charset="utf-8">
+        <title>Limite Boloss</title>
+        <link rel="stylesheet" href="bulma.css">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Sriracha&display=swap" rel="stylesheet">
+
+
+
+
+
+    </head>
+    <body >
+    <main id="main" v-cloak >
+        <section id="menu" v-if="!partySelected && !cardsManagement">
+        <div class="container is-fluid brand">
+            <div class="notification"  style="">
+                <strong class="title" style="font-size: 5rem">Limite Boloss</strong>
+                <br><br><br>
+                <input type="text" class="menu-input" placeholder="PSEUDO" v-model="pseudo"><br><br>
+                <button onclick="create()" class="button menu-button" style="margin-right: 3rem"><strong class="menu-text">Créer</strong></button>
+                <button onclick="join()" class="button menu-button" style=""><strong class="menu-text">Rejoindre</strong></button>
+                <br><br>
+                <button onclick="manageCards();" class="button menu-button-cards" style=""><strong class="menu-text">Gérer mes cartes</strong></button>
+
+            </div>
+        </div>
+        </section>
+        <section id="wait" v-if="partySelected && isPlaying == false && !cardsManagement">
+            <div class="container is-fluid waiting">
+                <div class="notification"  style="">
+                    <strong class="title" style="font-size: 4rem">Code : {{ partyCode }}</strong><br>
+                    <strong class="title" style="font-size: 2rem">En attente de joueurs ( Min. 3 )...</strong>
+                    <br><br><br><br>
+                    <buttons>
+                        <button v-for="user in partyUsers" class="button is-large is-rounded" style="border: 1px solid #2d3436;margin-right: 10px;">{{ user }}</button>
+
+                    </buttons>
+                    <br><br><br>
+                    <button class="button is-success is-rounded is-large" v-if="partyUsers.length >= requiredPlayers && isManager" onclick="sendStart()">Lancer la partie</button>
+                </div>
+            </div>
+
+        </section>
+        <section id="game" v-if="isPlaying">
+
+            <div class="container is-fluid abc" style="background-color: transparent;height: 100%">
+                <div class="start container">
+                    <div class="card">{{ start }}</div>
+                    <div class="placeholder dropzone" id="placeholder"></div>
+                </div>
+                <div class="end container abc dropzone draggable-dropzone--occupied" v-if="!didPlay && !isBoss && !isVoting">
+                    <div class="item card" v-for="(card, index) in getPlayableCards()" type="play"><p class="" :value="card.index">{{card.card}}</p></div>
+                </div>
+                <div class="end container abc dropzone draggable-dropzone--occupied" v-if="isBoss && isVoting">
+                    <div class="item card"  v-for="(id, pseudo) in played" type="vote"><p class=""  :value="pseudo">{{ getPlayedCardById(id) }}</p></div>
+                </div>
+                <div class="end container abc dropzone draggable-dropzone--occupied" v-if="!isBoss && isVoting">
+                    <div  v-bind:class="{ green: winner === pseudo }"  class="card"  v-for="(id, pseudo) in played" type="vote"><p :class="id">{{ getPlayedCardById(id) }}</p></div>
+                </div>
+                <div v-if="didPlay && !isVoting">
+                    <strong class="title wait-message" style="">En attente des autres joueurs...</strong>
+
+                </div>
+                <div v-if="didPlay && isVoting">
+                    <!-- TODO: Class for evitate duplicated css -->
+                    <strong class="title wait-message" v-if="winner === ''">En attente du BOSS...</strong>
+                    <strong class="title wait-message" style="color: lightgreen;" v-if="winner != ''">Et le gagnant est {{ winner }} !!!</strong>
+
+                </div>
+                <div v-if="isBoss && !isVoting">
+                    <strong class="title wait-message" v-if="winner === ''">Vous êtes le boss, attendez les autres...</strong>
+                    <strong class="title wait-message" style="color: lightgreen;" v-if="winner != ''">Et le gagnant est {{ winner }} !!!</strong>
+
+
+                </div>
+                <div class="users" v-if="isPlaying">
+
+                    <ul>
+                        <li class="info" v-if="isTiming">Il vous reste {{ timerCount}} secondes</li>
+
+                        <li class="user" v-for="user in partyUsers"><p>{{ user }} <p v-if="lastWinner == user"> (BOSS)</p></p><p v-for="point in getScoreCircles(user).filled" class="point">•</p><p v-for="point in getScoreCircles(user).notfilled" class="point unfilled">•</p></li>
+
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+        <section id="cardsmanagement" v-if="cardsManagement">
+            <div class="container is-fluid brand" >
+                <div class="notification" >
+                    <strong class="title" style="font-size: 5rem">Gestion Cartes</strong>
+                    <br><br>
+                    <div class="cardsselector">
+                        <input id="toggle-on" class="toggle toggle-left" name="toggle" value="false" type="radio" checked onchange="checkChange('start')">
+                        <label for="toggle-on" class="btn">Starts</label>
+                        <input id="toggle-off" class="toggle toggle-right" name="toggle" value="true" type="radio" onchange="checkChange('end')">
+                        <label for="toggle-off" class="btn">Ends</label>
+                    </div>
+                    <br><br>
+                    <div style="background-color: transparent;max-height: 55vh;overflow: auto;width: 90vw;left: 0%" :key="cookieComponent">
+                        <div v-for="(card, index) in cookieCardsGetter" ><input  type="text" class="card-manager-input" placeholder="Vide = Supprimée" v-model="cookieCards[selectedCookieCards][index]"><br></div>
+
+
+
+
+
+                    </div>
+                    <button onclick="addCookieCard();" class="button menu-button-cards" style=""><strong class="menu-text">Rajouter une carte</strong></button>
+                    <button onclick="saveCookieCard();" class="button menu-button-cards" style=""><strong class="menu-text">Sauvegarder</strong></button>
+
+
+
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+
+    <script src="chance.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+    <script src="vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/droppable.js"></script>
+
+    <script src="index.js" charset="utf-8"></script>
+    <script>
+        function setDragOn() {
+            console.log("SET ON DRAG")
+            drappable = new Droppable.default(document.querySelectorAll('.container'), {
+                draggable: '.item',
+                dropzone: '.dropzone',
+                distance: 5
+            });
+
+            drappable.on('droppable:dropped', () => setDragNDrop("dropped"));
+            drappable.on('droppable:returned', () => setDragNDrop("returned"));
+            drappable.on('droppable:stop', () => DragNDrop());
+        }
+
+    </script>
+
+
+    </body>
+</html>

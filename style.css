@@ -1,0 +1,313 @@
+
+
+input:focus, textarea:focus{
+    outline: none;
+}
+[v-cloak] {
+    display: none;
+}
+
+.players{
+    display: flex;
+    align-items: center;
+}
+.player{
+    margin-right: 2vw;
+}
+
+.menu-button{
+    height: 10rem;width:15rem;border-radius: 35px;border: 5px solid #0984e3
+}
+.menu-button-cards{
+    height: 5rem;width:20rem;border-radius: 35px;border: 5px solid #0984e3
+}
+
+.menu-text{
+    font-size: 2rem;color: black;
+}
+
+.notification{
+    min-height: 100%;text-align: center;background-color: transparent;
+}
+
+.brand{
+    margin: 0;
+    position: absolute;
+    top: 35%;
+    -ms-transform: translateY(-35%);
+    transform: translateY(-35%);
+}
+
+.waiting{
+    margin: 0;
+    position: absolute;
+    top: 25%;
+    -ms-transform: translateY(-25%);
+    transform: translateY(-25%);
+
+}
+
+html{
+    background-color: #74b9ff;
+    color: white;
+}
+body{
+    color: white;
+}
+.swal2-popup {
+    font-size: 1.6rem !important;
+}
+
+.start{
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    top: 5vh;
+}
+
+
+.end{
+    display: flex;
+    position: static;
+    padding-top: 5vh;
+
+
+
+}
+.end .card{
+    height: 18vmax;
+    width: 12vmax;
+    border-radius: 35px;
+    background-color: white;
+    color: #2d3436;
+    font-weight: bold;
+    font-size: 1.2vw;
+    text-align: center;
+    padding-top: 2rem;
+    overflow-wrap: anywhere;
+}
+.end .green{
+    height: 18vmax;
+    width: 12vmax;
+    border-radius: 35px;
+    background-color: lightgreen;
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.start .card{
+    height: 18vmax;
+    width: 12vmax;
+    border-radius: 35px;
+    background-color: white;
+    color: #2d3436;
+    font-weight: bold;
+    font-size: 1.2vw;
+    text-align: center;
+    padding-top: 2rem;
+    overflow-wrap: break-word;
+}
+
+.start .placeholder{
+    margin-left: 5vw;
+    background-color: transparent;
+    height: 18vmax;
+    width: 12vmax;
+    border-radius: 35px;
+    border: 1px dashed #2d3436;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.wait-message{
+    font-size: 2rem;color: white;position: absolute;top: 60%;left: 20%
+}
+
+
+.users{
+    position: absolute;
+    top: 50%;
+    height: 20rem;
+    width: 15rem;
+}
+
+.menu-input{
+    width:30rem;border-radius: 35px;border: 5px solid #0984e3;height: 5rem;  padding-left: 10px;font-size: 2rem;
+
+
+
+
+}
+
+.card-manager-input{
+    width:45vw;border-radius: 35px;border: 5px solid #0984e3;height: 5rem;  padding-left: 10px;font-size: 2vw;
+
+}
+
+.menu-input:focus {
+    outline: none;
+}
+
+
+@media all and (min-width: 1000px) {
+    .end{
+        margin-left: 35%;
+        flex-wrap: wrap;
+
+
+
+    }
+    .end .card{
+        margin-left: 5vh;
+        margin-bottom: 5vh;
+    }
+}
+
+
+.user::before {
+    content: '';
+    display: inline-block;
+    height: 3rem;
+    width: 3rem;
+    background-color: white;
+    -webkit-mask: url(https://unpkg.com/ionicons@5.0.0/dist/svg/person-circle-outline.svg) no-repeat 100% 100%;
+    mask: url(https://unpkg.com/ionicons@5.0.0/dist/svg/person-circle-outline.svg) no-repeat 100% 100%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    margin-right: 0.5em;
+}
+
+
+
+ul li{
+    padding-bottom: 2vh;
+    font-family: "Sriracha";
+    display: flex;
+    align-items: center;
+}
+
+.info::before{
+
+
+}
+
+.point{
+    -webkit-text-stroke: 1px white;
+    margin-left: 0.3em;
+    margin-top: 5px;
+
+}
+.unfilled{
+    color: transparent;
+
+}
+
+@media all and (max-width: 980px) {
+    .start{
+        display: flex;
+        justify-content: space-around;
+        position: static;
+        padding-top: 5vh;
+    }
+    .end{
+        display: flex;
+        position: static;
+        padding-top: 5vh;
+        align-items: center;
+        overflow-x: auto;
+    }
+    .end .card{
+        flex-shrink: 0;
+        margin-right: 2vw;
+        font-size: 3vw;
+    }
+    .start .card{
+        height: 28vmax;
+        width: 18vmax;
+        font-size: 3vw;
+        padding-top: 8vh;
+
+    }
+
+    .start .placeholder{
+        height: 28vmax;
+        width: 18vmax;
+        font-size: 3vw;
+    }
+    .wait-message{
+        font-size: 2rem;color: white;position: absolute;top: 65%;left: 20%
+    }
+    .users{
+        top: 70%;
+        height: 30rem;
+        width: 50rem;
+
+
+    }
+    ul li{
+        font-size: 2rem;
+    }
+
+    /* put your css styles in here */
+}
+
+
+.btn {
+    border: 3px solid white;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background 600ms ease, color 600ms ease;
+    transition: background 600ms ease, color 600ms ease;
+}
+
+input[type="radio"].toggle {
+    display: none;
+}
+input[type="radio"].toggle + label {
+    cursor: pointer;
+    min-width: 60px;
+}
+input[type="radio"].toggle + label:hover {
+    background: none;
+    color: white;
+}
+input[type="radio"].toggle + label:after {
+    background: white;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: 0;
+    -webkit-transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+    transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+    width: 100%;
+    z-index: -1;
+}
+input[type="radio"].toggle.toggle-left + label {
+    border-right: 0;
+}
+input[type="radio"].toggle.toggle-left + label:after {
+    left: 100%;
+}
+input[type="radio"].toggle.toggle-right + label {
+    margin-left: -5px;
+}
+input[type="radio"].toggle.toggle-right + label:after {
+    left: -100%;
+}
+input[type="radio"].toggle:checked + label {
+    cursor: default;
+    color: black;
+    -webkit-transition: color 200ms;
+    transition: color 200ms;
+}
+input[type="radio"].toggle:checked + label:after {
+    left: 0;
+}
+
